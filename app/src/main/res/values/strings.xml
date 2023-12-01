@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">KidsHub</string>
+
+    <!--   Main Screen   -->
+    <string name="kid_content_description">KidsHub</string>
+    <string name="title_activity_home">HomeActivity</string>
+</resources>
