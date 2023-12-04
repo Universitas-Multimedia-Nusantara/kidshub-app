@@ -7,10 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import id.ac.umn.kidshub.ui.theme.poppinsFamily
 
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(navController: NavController) {
     Box(modifier =  Modifier
         .fillMaxSize(),
         contentAlignment = Alignment.Center
