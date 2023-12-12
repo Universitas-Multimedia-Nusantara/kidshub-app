@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -41,6 +42,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import id.ac.umn.kidshub.HomeActivity
 import id.ac.umn.kidshub.R
+import id.ac.umn.kidshub.components.ButtonComponent
+import id.ac.umn.kidshub.components.TextFieldComponent
 import id.ac.umn.kidshub.navigation.Screen
 import id.ac.umn.kidshub.ui.theme.poppinsFamily
 
@@ -49,10 +52,6 @@ import id.ac.umn.kidshub.ui.theme.poppinsFamily
 fun LoginScreen(navController: NavController) {
 
     val context = LocalContext.current
-
-    var usernameTextState by rememberSaveable {
-        mutableStateOf("")
-    }
 
     var emailTextState by rememberSaveable {
         mutableStateOf("")
@@ -70,7 +69,7 @@ fun LoginScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFFFFFFF))
-            .padding(horizontal =  48.dp),
+            .padding(horizontal = 48.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -96,44 +95,13 @@ fun LoginScreen(navController: NavController) {
             painter = painterResource(id = R.drawable.ic_mainscreen_kids),
             contentDescription = stringResource(id = R.string.kid_content_description),
         )
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            value = emailTextState,
-            onValueChange = {
-                emailTextState = it
-            },
-            placeholder = {
-                Text(
-                    text = "Email",
-                    fontSize = 16.sp,
-                    fontFamily = poppinsFamily,
-                    fontWeight = FontWeight.Normal,
-                    textAlign = TextAlign.Center,
-                    color = Color(0xFF4B4B4B),
-                )
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                containerColor = Color(0xFFF1F8FF),
-                cursorColor = Color.Black,
-                disabledLabelColor = Color(0xFFF1F8FF),
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            shape = RoundedCornerShape(8.dp),
-            singleLine = true,
-            trailingIcon = {
-                if (emailTextState.isNotEmpty()) {
-                    IconButton(onClick = { emailTextState = "" }) {
-                        Icon(
-                            imageVector = Icons.Outlined.Close,
-                            contentDescription = null
-                        )
-                    }
-                }
+        TextFieldComponent(
+            labelValue = "Username",
+            onTextSelected = {
+                /* TODO */
             }
         )
+        Spacer(modifier = Modifier.padding(8.dp))
         TextField(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -186,27 +154,13 @@ fun LoginScreen(navController: NavController) {
                 color = Color(0xFF000000),
             )
         }
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp, bottom = 16.dp)
-                .height(55.dp),
-            colors = ButtonDefaults.elevatedButtonColors(
-                containerColor = Color(0xFF47A7FF),
-                contentColor = Color.White
-            ),
+        ButtonComponent(
+            text = "Sign In",
             onClick = {
                 context.startActivity(Intent(context, HomeActivity::class.java))
-            }
-        ) {
-            Text("Sign in",
-                fontSize = 24.sp,
-                fontFamily = poppinsFamily,
-                fontWeight = FontWeight.SemiBold,
-                textAlign = TextAlign.Center,
-                color = Color.White,
-            )
-        }
+            },
+            isEnabled = true
+        )
         TextButton(
             modifier = Modifier
                 .fillMaxWidth(),

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -55,7 +56,7 @@ fun HomeScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFFFFFFF))
-            .padding(30.dp, 10.dp),
+            .padding(30.dp, 30.dp),
     ) {
         Box(
             modifier = Modifier
@@ -130,7 +131,7 @@ fun HomeScreen(navController: NavController) {
         }
         Spacer(
             modifier = Modifier
-                .height(20.dp)
+                .height(15.dp)
         )
         Row(
             modifier = Modifier
@@ -186,7 +187,7 @@ fun HomeScreen(navController: NavController) {
             }
             Spacer(
                 modifier = Modifier
-                    .width(20.dp)
+                    .width(15.dp)
             )
             Box(
                 modifier = Modifier
@@ -231,6 +232,134 @@ fun HomeScreen(navController: NavController) {
                                 color = Color.White,
                                 fontSize = 8.sp
                             )
+                        }
+                    }
+                }
+            }
+        }
+        Spacer(
+            modifier = Modifier
+                .height(30.dp)
+        )
+        Column() {
+            Box(
+            ) {
+                Text(
+                    "Videos of the week ✨",
+                    color = Color(0xFF371B34),
+                    fontSize = 16.sp,
+                    fontFamily = poppinsFamily,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+            LazyColumn() {
+                item {
+                    Spacer(
+                        modifier = Modifier
+                            .height(10.dp)
+                    )
+                }
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)
+                            .background(
+                                Color(0xFFDDEFFC),
+                                RoundedCornerShape(15.dp)
+                            )
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(20.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(0.dp, 0.dp, 0.dp, 0.dp),
+                                ) {
+                                    Text(
+                                        text = "Alphabet",
+                                        color = Color.Black,
+                                        fontSize = 10.sp,
+                                        fontFamily = poppinsFamily,
+                                        fontWeight = FontWeight.SemiBold,
+                                    )
+                                    Text(
+                                        text = "A",
+                                        fontSize = 16.sp,
+                                        fontFamily = poppinsFamily,
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                }
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                            ) {
+                                Image(
+                                    modifier = Modifier
+                                        .width(118.15.dp)
+                                        .height(138.dp),
+                                    painter = painterResource(id = R.drawable.ic_hero_home_screen),
+                                    contentDescription = stringResource(id = R.string.kid_content_description),
+                                )
+                            }
+                        }
+                    }
+                }
+                item {
+                    Spacer(
+                        modifier = Modifier
+                            .height(10.dp)
+                    )
+                }
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)
+                            .background(
+                                Color(0xFFDDEFFC),
+                                RoundedCornerShape(15.dp)
+                            )
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(20.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .padding(0.dp, 0.dp, 0.dp, 0.dp),
+                                ) {
+                                    Text(
+                                        text = "Alphabet",
+                                        color = Color.Black,
+                                        fontSize = 10.sp,
+                                        fontFamily = poppinsFamily,
+                                        fontWeight = FontWeight.SemiBold,
+                                    )
+                                    Text(
+                                        text = "A",
+                                        fontSize = 16.sp,
+                                        fontFamily = poppinsFamily,
+                                        fontWeight = FontWeight.Bold,
+                                    )
+                                }
+                            }
                         }
                     }
                 }

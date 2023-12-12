@@ -17,12 +17,15 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -74,10 +77,14 @@ fun AppNavigation() {
     Scaffold (
         topBar = {
             TopAppBar(
+               colors = TopAppBarDefaults.smallTopAppBarColors(
+                   containerColor = Color.White,
+               ),
                 title = {
                     Row(
                         modifier = Modifier
-                            .fillMaxWidth(),
+                            .fillMaxWidth()
+                            .padding(20.dp,20.dp, 0.dp, 0.dp),
                         verticalAlignment = Alignment
                             .CenterVertically,
                     ) {
@@ -113,21 +120,28 @@ fun AppNavigation() {
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp, 20.dp)
-                    .height(55.dp),
+                    .height(80.dp)
+                    .background(
+                        Color.White,
+                        RoundedCornerShape(0.dp)
+                    ),
                 actions = {
                     Image(
+                        modifier = Modifier
+                            .width(70.dp)
+                            .height(70.dp)
+                            .padding(0.dp, 25.dp, 20.dp, 0.dp),
+                        alignment = Alignment.Center,
                         imageVector = Icons.Default.AccountCircle,
                         contentDescription = null,
-                        modifier = Modifier
-                            .height(40.dp)
-                            .padding(10.dp)
                     )
                 },
             )
         },
         bottomBar = {
-            NavigationBar {
+            NavigationBar(
+                containerColor = Color.White,
+            ) {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
 
@@ -151,7 +165,14 @@ fun AppNavigation() {
                         },
                         label = {
                             Text(text = navItem.label)
-                        }
+                        },
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = Color(0xFF47A7FF),
+                            selectedTextColor = Color(0xFF47A7FF),
+                            indicatorColor = Color.White,
+                            unselectedIconColor = Color(0xFFAFAFAF),
+                            unselectedTextColor = Color(0xFFAFAFAF),
+                        ),
                     )
                 }
             }

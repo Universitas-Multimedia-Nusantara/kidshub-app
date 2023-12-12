@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "968794452431",
+    "project_id": "kidshub-f6ffd",
+    "storage_bucket": "kidshub-f6ffd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968794452431:android:87c68e79c315fa708ca2ba",
+        "android_client_info": {
+          "package_name": "id.ac.umn.kidshub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrohO8UMRvC-HjlChjs6GsUxgLuFdcyn8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
