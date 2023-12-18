@@ -1,11 +1,20 @@
 package id.ac.umn.kidshub.navigation
 
-sealed class Screen(val route: String) {
-    object MainScreen : Screen("main_screen")
-    object LoginScreen : Screen("login_screen")
-    object RegisterScreen : Screen("register_screen")
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 
-    object HomeScreen : Screen("home_screen")
-    object BooksScreen : Screen("books_screen")
-    object ProfileScreen : Screen("profile_screen")
+sealed class Screen{
+
+    //Authentication Screen
+    object MainScreen : Screen()
+    object LoginScreen : Screen()
+    object RegisterScreen : Screen()
+
+    //Home Screen
+    object HomeScreen : Screen()
+    object BooksScreen : Screen()
+    object ProfileScreen : Screen()
+
+    //Details Screen
+    data class VideosDetailScreen(val videoId: Int) : Screen()
 }

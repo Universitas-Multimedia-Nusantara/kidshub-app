@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,14 +22,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import id.ac.umn.kidshub.R
+import id.ac.umn.kidshub.navigation.NavigationRouter
 import id.ac.umn.kidshub.navigation.Screen
 import id.ac.umn.kidshub.ui.theme.poppinsFamily
 
 
 @Composable
-fun MainScreen(navController: NavController) {
+fun MainScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -62,7 +61,8 @@ fun MainScreen(navController: NavController) {
                 contentColor = Color.White
             ),
             onClick = {
-                navController.navigate(Screen.LoginScreen.route)
+//                navController.navigate(Screen.LoginScreen.route)
+                NavigationRouter.navigateTo(Screen.LoginScreen)
             }
         ) {
             Text("Start now!",
@@ -79,5 +79,5 @@ fun MainScreen(navController: NavController) {
 @Composable
 @Preview(showBackground = true)
 fun MainScreenPreview() {
-    MainScreen(navController = NavController(LocalContext.current))
+    MainScreen()
 }

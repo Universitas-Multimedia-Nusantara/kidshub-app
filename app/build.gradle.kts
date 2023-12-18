@@ -76,6 +76,7 @@ dependencies {
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
 
     //Splash Api
     implementation("androidx.core:core-splashscreen:1.0.1")
@@ -117,7 +118,16 @@ dependencies {
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.10.0")
+
 
     //Material Icons Extended
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
+
+    //Glide
+    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
+
+    //Android Youtube Player
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.28")
 }
