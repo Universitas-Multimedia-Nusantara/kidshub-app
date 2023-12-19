@@ -1,5 +1,6 @@
 package id.ac.umn.kidshub.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,11 +23,15 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -54,12 +59,12 @@ fun BooksScreen() {
     Scaffold(
         topBar = {
             KidsHubTopAppBar(
-                title = "Books",
-                subtitle = "Explore our books !",
+                title = "Playground of Knowledge",
+                subtitle = "Explore the world !",
             )
         },
         bottomBar = {
-            KidsHubBottomAppBar(selectedItem = 1)
+            KidsHubBottomAppBar(selectedItem = 2)
         }
     )  { paddingValues ->
         BooksScreenContent(
@@ -100,7 +105,7 @@ fun BooksScreenContent(
                         .fillMaxWidth()
                         .height(157.dp)
                         .background(
-                            Color(0xFFDDEFFC),
+                            Color(0xFFFCDDDD),
                             RoundedCornerShape(20.dp)
                         )
                 ) {
@@ -115,7 +120,7 @@ fun BooksScreenContent(
                             Column(
                             ) {
                                 Text(
-                                    "Children's",
+                                    "Playground of",
                                     fontSize = 16.sp,
                                     fontFamily = poppinsFamily,
                                     fontWeight = FontWeight.SemiBold,
@@ -123,7 +128,7 @@ fun BooksScreenContent(
                                     color = Color.Black,
                                 )
                                 Text(
-                                    "Book",
+                                    "Knowledge",
                                     fontSize = 26.sp,
                                     fontFamily = poppinsFamily,
                                     fontWeight = FontWeight.Bold,
@@ -135,21 +140,6 @@ fun BooksScreenContent(
                                         .padding(0.dp,10.dp, 0.dp, 0.dp),
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
-                                    Button(onClick = { /*TODO*/ },
-                                        modifier = Modifier
-                                            .height(32.dp),
-                                        colors = ButtonDefaults.elevatedButtonColors(
-                                            containerColor = Color(0xFF47A7FF),
-                                            contentColor = Color.White
-                                        ),
-                                    ) {
-                                        Text("Explore !",
-                                            color = Color.White,
-                                            fontSize = 12.sp,
-                                            fontFamily = poppinsFamily,
-                                            fontWeight = FontWeight.SemiBold,
-                                        )
-                                    }
                                 }
                             }
                         }
@@ -204,19 +194,29 @@ fun BooksScreenContent(
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
+@OptIn(ExperimentalGlideComposeApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun BooksListItem(booksData: BooksData) {
+fun BooksListItem(
+    booksData: BooksData,
+    onClick : () -> Unit = { }
+) {
+
+    var openBottomSheet by remember { mutableStateOf(false) }
+
    Card (
        modifier = Modifier
            .size(150.dp),
        shape = RoundedCornerShape(20.dp),
+       onClick = {
+           openBottomSheet = true
+           Log.d("BooksScreen", "BooksListItem: ${booksData.title}")
+       }
    ) {
        GlideImage(
            modifier = Modifier
                .background(
-                     Color(0xFFEFEFEF),
-                     RoundedCornerShape(20.dp)
+                   Color(0xFFEFEFEF),
+                   RoundedCornerShape(20.dp)
                )
                .fillMaxSize(),
            model = booksData.cover,
@@ -224,7 +224,90 @@ fun BooksListItem(booksData: BooksData) {
            contentScale = ContentScale.Crop,
        )
    }
+
+    if (openBottomSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { openBottomSheet = false },
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White)
+            ) {
+
+                GlideImage(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(350.dp)
+                        .background(
+                            Color(0xFFEFEFEF),
+                            RoundedCornerShape(20.dp)
+                        )
+                        .fillMaxSize(),
+                    model = booksData.cover,
+                    contentDescription = booksData.title,
+                    contentScale = ContentScale.Crop,
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(20.dp , 0.dp, 20.dp, 20.dp)
+                ) {
+                    Text(
+                        text = booksData.title,
+                        fontSize = 24.sp,
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                    )
+                    Text(
+                        text = "by ${booksData.author}",
+                        fontSize = 16.sp,
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Normal,
+                        color = Color(0xFF878787),
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(text = "Details",
+                        fontSize = 16.sp,
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                    )
+                    Text(
+                        text = "Publisher : ${booksData.publisher}",
+                        fontSize = 16.sp,
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Normal,
+                        color = Color.Black,
+                    )
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(text = "Synopsis",
+                        fontSize = 16.sp,
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black,
+                    )
+                    Text(
+                        text = booksData.description,
+                        fontSize = 14.sp,
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black,
+                    )
+                }
+            }
+        }
+    }
 }
+
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun BooksModalBottomSheet() {
+//
+//
+//}
 
 @Preview
 @Composable

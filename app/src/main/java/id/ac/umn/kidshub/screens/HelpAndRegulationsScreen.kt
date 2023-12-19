@@ -55,7 +55,7 @@ fun HelpAndRegulationsScreen() {
             )
         },
         bottomBar = {
-            KidsHubBottomAppBar(selectedItem = 2)
+            KidsHubBottomAppBar(selectedItem = 3)
         }
     )  { paddingValues ->
         HelpAndRegulationsScreenContent(

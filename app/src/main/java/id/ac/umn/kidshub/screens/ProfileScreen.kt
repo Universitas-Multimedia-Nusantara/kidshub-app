@@ -42,7 +42,7 @@ fun ProfileScreen() {
 
     Scaffold(
         bottomBar = {
-            KidsHubBottomAppBar(selectedItem = 2)
+            KidsHubBottomAppBar(selectedItem = 3)
         }
     )  { paddingValues ->
         ProfileScreenContent(

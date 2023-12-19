@@ -200,7 +200,7 @@ fun HomeScreenContent(
                                         fontWeight = FontWeight.SemiBold,
                                     )
                                     Text(
-                                        text = "Alphabets",
+                                        text = "Knowledge",
                                         fontSize = 16.sp,
                                         fontFamily = poppinsFamily,
                                         fontWeight = FontWeight.Bold,
@@ -210,7 +210,9 @@ fun HomeScreenContent(
                                             .fillMaxWidth()
                                             .absolutePadding(0.dp, 10.dp, 0.dp, 0.dp)
                                     ) {
-                                        Button(onClick = { /*TODO*/ },
+                                        Button(onClick = {
+                                            NavigationRouter.navigateTo(Screen.BooksScreen)
+                                        },
                                             colors = ButtonDefaults.elevatedButtonColors(
                                                 containerColor = Color(0xFFFF4747),
                                                 contentColor = Color.White
@@ -243,14 +245,14 @@ fun HomeScreenContent(
                                         .padding(20.dp),
                                 ) {
                                     Text(
-                                        text = "Symphony",
+                                        text = "Planet of",
                                         color = Color.Black,
                                         fontSize = 10.sp,
                                         fontFamily = poppinsFamily,
                                         fontWeight = FontWeight.SemiBold,
                                     )
                                     Text(
-                                        text = "Voice & Music",
+                                        text = "Video & Music",
                                         fontSize = 16.sp,
                                         fontFamily = poppinsFamily,
                                         fontWeight = FontWeight.Bold,
@@ -260,7 +262,9 @@ fun HomeScreenContent(
                                             .fillMaxWidth()
                                             .absolutePadding(0.dp, 10.dp, 0.dp, 0.dp)
                                     ) {
-                                        Button(onClick = { /*TODO*/ },
+                                        Button(onClick = {
+                                            NavigationRouter.navigateTo(Screen.VideosScreen)
+                                        },
                                             colors = ButtonDefaults.elevatedButtonColors(
                                                 containerColor = Color(0xFF4B47FF),
                                                 contentColor = Color.White
@@ -269,7 +273,7 @@ fun HomeScreenContent(
                                                 .height(30.dp)
                                         ) {
                                             Text(
-                                                "Listen",
+                                                "Watch",
                                                 color = Color.White,
                                                 fontSize = 8.sp
                                             )
@@ -298,7 +302,7 @@ fun HomeScreenContent(
                         )
                     }
                     items(
-                        items = videos,
+                        items = videos.take(10),
                         itemContent = {
                             VideosListItem(videosData = it)
                         }
