@@ -40,11 +40,14 @@ import com.google.firebase.auth.FirebaseAuth
 import id.ac.umn.kidshub.R
 import id.ac.umn.kidshub.data.home.HomeViewModel
 import id.ac.umn.kidshub.data.home.videos.VideosDataProvider
+import id.ac.umn.kidshub.screens.AboutScreen
+import id.ac.umn.kidshub.screens.AccountCenterScreen
 import id.ac.umn.kidshub.screens.LoginScreen
 import id.ac.umn.kidshub.screens.MainScreen
 import id.ac.umn.kidshub.screens.RegisterScreen
 import id.ac.umn.kidshub.screens.HomeScreen
 import id.ac.umn.kidshub.screens.BooksScreen
+import id.ac.umn.kidshub.screens.HelpAndRegulationsScreen
 import id.ac.umn.kidshub.screens.ProfileScreen
 import id.ac.umn.kidshub.screens.VideosDetailScreen
 import id.ac.umn.kidshub.ui.theme.poppinsFamily
@@ -60,8 +63,6 @@ fun Navigation(
     val userId = auth.currentUser?.uid
     val coroutineScope = rememberCoroutineScope()
 
-    val videos = remember { VideosDataProvider.videosList }
-
     LaunchedEffect(Unit, userId) {
         coroutineScope.launch {
             homeViewModel.checkForActiveSession()
@@ -70,6 +71,8 @@ fun Navigation(
                 try {
                     val job = async {
                         homeViewModel.getUserData()
+                        homeViewModel.getVideosData()
+                        homeViewModel.getBooksData()
                     }
 
                     job.await()
@@ -90,12 +93,15 @@ fun Navigation(
             is Screen.HomeScreen -> HomeScreen()
             is Screen.BooksScreen -> BooksScreen()
             is Screen.ProfileScreen -> ProfileScreen()
+            is Screen.AccountCenterScreen -> AccountCenterScreen()
+            is Screen.HelpAndRegulationsScreen -> HelpAndRegulationsScreen()
+            is Screen.AboutScreen -> AboutScreen()
             is Screen.VideosDetailScreen -> VideosDetailScreen(
-                videosId = screen.videoId - 1,
-                videosTitle = VideosDataProvider.videosList.map { it.title }.toTypedArray(),
-                videosDescription = VideosDataProvider.videosList.map { it.description }.toTypedArray(),
-                videosUrl = VideosDataProvider.videosList.map { it.url }.toTypedArray(),
-                videosUploader = VideosDataProvider.videosList.map { it.uploader }.toTypedArray(),
+                videosId = screen.videoId,
+                videosTitle = VideosDataProvider.videosDataList.map { it.title }.toTypedArray(),
+                videosDescription = VideosDataProvider.videosDataList.map { it.description }.toTypedArray(),
+                videosUrl = VideosDataProvider.videosDataList.map { it.url }.toTypedArray(),
+                videosUploader = VideosDataProvider.videosDataList.map { it.uploader }.toTypedArray(),
             )
         }
     }
