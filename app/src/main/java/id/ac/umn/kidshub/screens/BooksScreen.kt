@@ -14,11 +14,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -40,16 +38,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import id.ac.umn.kidshub.R
 import id.ac.umn.kidshub.data.home.books.BooksData
-import id.ac.umn.kidshub.data.home.videos.VideosData
 import id.ac.umn.kidshub.navigation.KidsHubBottomAppBar
 import id.ac.umn.kidshub.navigation.KidsHubTopAppBar
 import id.ac.umn.kidshub.ui.theme.poppinsFamily
 import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.placeholder
 import id.ac.umn.kidshub.data.home.books.BooksDataProvider
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -80,7 +75,7 @@ fun BooksScreenContent(
 ) {
 
     val books = remember {
-        BooksDataProvider.booksList
+        BooksDataProvider.booksDataList
     }
 
     Box(
@@ -242,7 +237,7 @@ fun BooksScreenPreview() {
 fun BooksListItemPreview() {
     BooksListItem(
         booksData = BooksData(
-            1,
+            "1",
             "https://th.bing.com/th/id/OIP.Hm6pFeOgwxuNXSFwvdIK_gHaGi?rs=1&pid=ImgDetMain",
             "The Very Hungry Caterpillar",
             "Eric Carle",

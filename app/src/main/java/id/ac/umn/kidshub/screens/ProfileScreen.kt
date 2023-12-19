@@ -32,6 +32,8 @@ import id.ac.umn.kidshub.components.ClickableTextComponent
 import id.ac.umn.kidshub.data.profile.ProfileViewModel
 import id.ac.umn.kidshub.navigation.KidsHubBottomAppBar
 import id.ac.umn.kidshub.navigation.KidsHubTopAppBar
+import id.ac.umn.kidshub.navigation.NavigationRouter
+import id.ac.umn.kidshub.navigation.Screen
 import id.ac.umn.kidshub.ui.theme.poppinsFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,6 +73,7 @@ fun ProfileScreenContent(
         ) {
             Column(
                 modifier = Modifier
+                    .background(Color.White)
                     .fillMaxSize()
                     .padding(30.dp, 75.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -133,7 +136,7 @@ fun ProfileScreenContent(
                         color = Color.Black,
                         textAlign = TextAlign.Start,
                         onClick = {
-                            //
+                            NavigationRouter.navigateTo(Screen.AccountCenterScreen)
                         }
                     )
                 }
@@ -153,14 +156,14 @@ fun ProfileScreenContent(
                     )
                     ClickableTextComponent(
                         initialText = "",
-                        actionText = "Help",
+                        actionText = "Help & Regulations",
                         actionFontSize = 20,
                         actionFontWeight = FontWeight.Medium,
                         paddingTop = 25,
                         color = Color.Black,
                         textAlign = TextAlign.Start,
                         onClick = {
-                            //
+                            NavigationRouter.navigateTo(Screen.HelpAndRegulationsScreen)
                         }
                     )
                     ClickableTextComponent(
@@ -172,7 +175,7 @@ fun ProfileScreenContent(
                         color = Color.Black,
                         textAlign = TextAlign.Start,
                         onClick = {
-                            //
+                            NavigationRouter.navigateTo(Screen.AboutScreen)
                         }
                     )
                 }

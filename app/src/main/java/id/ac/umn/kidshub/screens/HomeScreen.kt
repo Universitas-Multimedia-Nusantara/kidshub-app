@@ -1,6 +1,7 @@
 package id.ac.umn.kidshub.screens
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -54,7 +56,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = HomeViewModel()) {
     Scaffold(
         topBar = {
             KidsHubTopAppBar(
-                title = "Good Morning !",
+                title = homeViewModel.greeting,
                 subtitle = "${homeViewModel.userData.firstName} ${homeViewModel.userData.lastName}",
             )
         },
@@ -75,7 +77,7 @@ fun HomeScreenContent(
 ) {
 
     val videos = remember {
-        VideosDataProvider.videosList
+        VideosDataProvider.videosDataList
     }
 
     Box(
@@ -297,9 +299,6 @@ fun HomeScreenContent(
                     }
                     items(
                         items = videos,
-                        key = { videosData ->
-                            videosData.id
-                        },
                         itemContent = {
                             VideosListItem(videosData = it)
                         }
@@ -311,7 +310,13 @@ fun HomeScreenContent(
 }
 
 @Composable
-fun VideosListItem(videosData: VideosData) {
+fun VideosListItem(
+    videosData: VideosData,
+    homeViewModel: HomeViewModel = HomeViewModel()
+) {
+
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -333,6 +338,9 @@ fun VideosListItem(videosData: VideosData) {
                 ),
                 onClick = {
                     NavigationRouter.navigateTo(Screen.VideosDetailScreen(videosData.id))
+                    homeViewModel.updateUserExp()
+                    Toast.makeText(context, "You've gained more exp!", Toast.LENGTH_SHORT).show()
+
                     Log.d("VideosListItem", "onClick: ${videosData.id}")
                 }
             ) {
