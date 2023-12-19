@@ -57,15 +57,16 @@ import id.ac.umn.kidshub.ui.theme.poppinsFamily
 
 @Composable
 fun ButtonComponent (
+    modifier: Modifier = Modifier
+        .fillMaxWidth()
+        .padding(top = 16.dp, bottom = 16.dp)
+        .height(55.dp),
     text: String,
     onButtonClicked: () -> Unit,
     isEnabled : Boolean,
 ) {
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 16.dp, bottom = 16.dp)
-            .height(55.dp),
+        modifier = modifier,
         colors = ButtonDefaults.elevatedButtonColors(
             containerColor = Color(0xFF47A7FF),
             contentColor = Color.White
@@ -89,6 +90,7 @@ fun ButtonComponent (
 fun TextFieldComponent (
     labelValue: String,
     onTextSelected: (String) -> Unit,
+    paddingTop: Int = 0,
     errorStatus: Boolean = false,
 ) {
 
@@ -100,7 +102,8 @@ fun TextFieldComponent (
 
     TextField(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .padding(top = paddingTop.dp),
         value = textValue.value,
         onValueChange = {
             textValue.value = it
