@@ -43,7 +43,7 @@ import id.ac.umn.kidshub.ui.theme.poppinsFamily
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VideosDetailScreen(
-    videosId: Int?,
+    videosId: String,
     videosTitle: Array<String>,
     videosDescription: Array<String>,
     videosUrl: Array<String>,
@@ -71,7 +71,7 @@ fun VideosDetailScreen(
         }
     )  { paddingValues ->
         VideosDetailScreenContent(
-            videosId = videosId,
+            videosId = videosId.toInt(),
             videosTitle = videosTitle,
             videosDescription = videosDescription,
             videosUrl = videosUrl,
@@ -181,10 +181,10 @@ fun VideosDetailScreenContent(
 @Composable
 fun VideosDetailScreenPreview() {
     VideosDetailScreen(
-        videosId = 0,
-        videosTitle = VideosDataProvider.videosList.map { it.title }.toTypedArray(),
-        videosDescription = VideosDataProvider.videosList.map { it.description }.toTypedArray(),
-        videosUrl = VideosDataProvider.videosList.map { it.url }.toTypedArray(),
-        videosUploader = VideosDataProvider.videosList.map { it.uploader }.toTypedArray(),
+        videosId = "0",
+        videosTitle = VideosDataProvider.videosDataList.map { it.title }.toTypedArray(),
+        videosDescription = VideosDataProvider.videosDataList.map { it.description }.toTypedArray(),
+        videosUrl = VideosDataProvider.videosDataList.map { it.url }.toTypedArray(),
+        videosUploader = VideosDataProvider.videosDataList.map { it.uploader }.toTypedArray(),
     )
 }
