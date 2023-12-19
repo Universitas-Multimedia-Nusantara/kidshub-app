@@ -5,6 +5,7 @@ data class VideosData(
     val title: String,
     val thumbnail: String,
     val url: String,
+    val code: String,
     val description: String,
     val uploader: String,
 )
