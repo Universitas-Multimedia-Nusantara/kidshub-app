@@ -1,7 +1,7 @@
 package id.ac.umn.kidshub.data.home.videos
 
-data class VideosData (
-    val id: Int,
+data class VideosData(
+    val id: String,
     val title: String,
     val thumbnail: String,
     val url: String,
