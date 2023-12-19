@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,6 +49,7 @@ import id.ac.umn.kidshub.screens.BooksScreen
 import id.ac.umn.kidshub.screens.HelpAndRegulationsScreen
 import id.ac.umn.kidshub.screens.ProfileScreen
 import id.ac.umn.kidshub.screens.VideosDetailScreen
+import id.ac.umn.kidshub.screens.VideosScreen
 import id.ac.umn.kidshub.ui.theme.poppinsFamily
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -91,6 +91,7 @@ fun Navigation(
             is Screen.LoginScreen -> LoginScreen()
             is Screen.RegisterScreen -> RegisterScreen()
             is Screen.HomeScreen -> HomeScreen()
+            is Screen.VideosScreen -> VideosScreen()
             is Screen.BooksScreen -> BooksScreen()
             is Screen.ProfileScreen -> ProfileScreen()
             is Screen.AccountCenterScreen -> AccountCenterScreen()
@@ -100,6 +101,7 @@ fun Navigation(
                 videosId = screen.videoId,
                 videosTitle = VideosDataProvider.videosDataList.map { it.title }.toTypedArray(),
                 videosDescription = VideosDataProvider.videosDataList.map { it.description }.toTypedArray(),
+                videosCode = VideosDataProvider.videosDataList.map { it.code }.toTypedArray(),
                 videosUrl = VideosDataProvider.videosDataList.map { it.url }.toTypedArray(),
                 videosUploader = VideosDataProvider.videosDataList.map { it.uploader }.toTypedArray(),
             )
@@ -122,7 +124,6 @@ fun KidsHubTopAppBar(
     subtitle: String? = null,
     navigationIcon: @Composable (() -> Unit)? = null,
     onBackClick: () -> Unit = {},
-//    actions: @Composable RowScope.() -> Unit = {},
 ) {
 
     TopAppBar(
@@ -144,7 +145,7 @@ fun KidsHubTopAppBar(
                 verticalAlignment = Alignment
                     .CenterVertically,
             ) {
-                Column(
+                Box(
                     modifier = Modifier
                         .fillMaxWidth(),
                 ) {
@@ -157,6 +158,8 @@ fun KidsHubTopAppBar(
                     )
                     if (subtitle != null) {
                         Text(
+                            modifier = Modifier
+                                .padding(0.dp, 30.dp, 0.dp, 0.dp),
                             text = subtitle,
                             color = (Color(0xFF47A7FF)),
                             fontSize = 16.sp,
@@ -202,8 +205,9 @@ fun KidsHubBottomAppBar(selectedItem: Int) {
                     NavigationRouter.navigateTo(
                         when (index) {
                             0 -> Screen.HomeScreen
-                            1 -> Screen.BooksScreen
-                            2 -> Screen.ProfileScreen
+                            1 -> Screen.VideosScreen
+                            2 -> Screen.BooksScreen
+                            3 -> Screen.ProfileScreen
                             else -> Screen.HomeScreen
                         }
                     )
