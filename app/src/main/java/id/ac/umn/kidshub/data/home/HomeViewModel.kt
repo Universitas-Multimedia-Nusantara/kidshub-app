@@ -1,6 +1,9 @@
 package id.ac.umn.kidshub.data.home
 
+import android.app.DownloadManager
+import android.content.Context
 import android.util.Log
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -111,6 +114,7 @@ class HomeViewModel: ViewModel(), CoroutineScope {
                                     document.data["id"].toString(),
                                     document.data["title"].toString(),
                                     document.data["thumbnail"].toString(),
+                                    document.data["code"].toString(),
                                     document.data["url"].toString(),
                                     document.data["description"].toString(),
                                     document.data["uploader"].toString(),
