@@ -1,8 +1,5 @@
 package id.ac.umn.kidshub.navigation
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-
 sealed class Screen{
 
     //Authentication Screen
@@ -15,6 +12,12 @@ sealed class Screen{
     object BooksScreen : Screen()
     object ProfileScreen : Screen()
 
+    object AccountCenterScreen : Screen()
+
+    object HelpAndRegulationsScreen : Screen()
+
+    object AboutScreen : Screen()
+
     //Details Screen
-    data class VideosDetailScreen(val videoId: Int) : Screen()
+    data class VideosDetailScreen(val videoId: String) : Screen()
 }
