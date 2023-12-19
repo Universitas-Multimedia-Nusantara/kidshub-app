@@ -9,6 +9,8 @@ sealed class Screen{
 
     //Home Screen
     object HomeScreen : Screen()
+
+    object VideosScreen : Screen()
     object BooksScreen : Screen()
     object ProfileScreen : Screen()
 
