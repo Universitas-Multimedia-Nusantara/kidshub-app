@@ -12,6 +12,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import id.ac.umn.kidshub.data.rules.Validator
 import id.ac.umn.kidshub.data.signup.SignupUIEvent
 import id.ac.umn.kidshub.data.signup.SignupUIState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 
 class ProfileViewModel: ViewModel() {
 
@@ -21,9 +25,9 @@ class ProfileViewModel: ViewModel() {
 
     var profileUIState = mutableStateOf(SignupUIState())
 
-    var allValidationPassed = mutableStateOf(false)
+    private var allValidationPassed = mutableStateOf(false)
 
-    var updateUserInProgress = mutableStateOf(false)
+    private var updateUserInProgress = mutableStateOf(false)
 
     val usersData = homeViewModel.userData
 
@@ -87,7 +91,7 @@ class ProfileViewModel: ViewModel() {
         }
     }
 
-    fun updateUser() {
+    private fun updateUser() {
         val firstName = profileUIState.value.firstName
         val lastName = profileUIState.value.lastName
 
@@ -137,19 +141,26 @@ class ProfileViewModel: ViewModel() {
     }
 
     fun logout() {
-        val firebaseAuth = FirebaseAuth.getInstance()
+        try {
+            val firebaseAuth = FirebaseAuth.getInstance()
 
-        firebaseAuth.signOut()
+            homeViewModel.clearVideosDataList()
+            homeViewModel.clearBooksDataList()
 
-        val authStateListener = FirebaseAuth.AuthStateListener {
-            if (it.currentUser == null) {
-                Log.d(TAG, "Inside_logout_success")
-                NavigationRouter.navigateTo(Screen.LoginScreen)
-            } else {
-                Log.d(TAG, "Inside_logout_failure")
+            firebaseAuth.signOut()
+
+            val authStateListener = FirebaseAuth.AuthStateListener {
+                if (it.currentUser == null) {
+                    Log.d(TAG, "Inside_logout_success")
+                    NavigationRouter.navigateTo(Screen.LoginScreen)
+                } else {
+                    Log.d(TAG, "Inside_logout_failure")
+                }
             }
-        }
 
-        firebaseAuth.addAuthStateListener(authStateListener)
+            firebaseAuth.addAuthStateListener(authStateListener)
+        }catch (e: Exception) {
+            Log.d(TAG, "Exception: $e")
+        }
     }
 }

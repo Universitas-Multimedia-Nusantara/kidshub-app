@@ -2,6 +2,7 @@ package id.ac.umn.kidshub.screens
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -136,8 +137,14 @@ fun LoginScreen(loginViewModel: LoginViewModel = LoginViewModel()) {
                 )
             }
         }
+
         if (loginViewModel.loginInProgress.value) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .padding(16.dp),
+                color = Color(0xFFAFAFAF),
+                trackColor = Color(0xFF47A7FF),
+            )
         }
 
         loginViewModel.loginStatus.observeAsState().value?.let {

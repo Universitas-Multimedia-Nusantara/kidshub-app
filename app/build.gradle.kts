@@ -133,4 +133,7 @@ dependencies {
 
     //Bottom Sheets
     implementation(platform("androidx.compose:compose-bom:2023.10.01"))
+
+    //Compose Material
+    implementation("androidx.compose.material:material:1.5.4")
 }

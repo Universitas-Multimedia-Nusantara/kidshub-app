@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import id.ac.umn.kidshub.data.rules.Validator
 import id.ac.umn.kidshub.navigation.NavigationRouter
 import id.ac.umn.kidshub.navigation.Screen
@@ -57,15 +58,40 @@ class SignupViewModel(): ViewModel() {
     }
 
     private fun signUp() {
-        Log.d(TAG, "Inside signUp()")
-        printState()
-        if (allValidationPassed.value) {
-            createUserInFirebase(
-                firstName = signupUIState.value.firstName,
-                lastName = signupUIState.value.lastName,
-                email = signupUIState.value.email,
-                password = signupUIState.value.password
-            )
+        try {
+            FirebaseFirestore
+                .getInstance()
+                .collection("users")
+                .whereEqualTo("email", signupUIState.value.email)
+                .get()
+                .addOnSuccessListener {
+                    Log.d(TAG, "Inside onSuccessListener()")
+                    Log.d(TAG, "isSuccessful = true")
+
+                    if (it.isEmpty) {
+                        Log.d(TAG, "User does not exist")
+                        createUserInFirebase(
+                            firstName = signupUIState.value.firstName,
+                            lastName = signupUIState.value.lastName,
+                            email = signupUIState.value.email,
+                            password = signupUIState.value.password
+                        )
+                    } else {
+                        Log.d(TAG, "User already exists")
+                        signupUIState.value = signupUIState.value.copy(
+                            emailError = true
+                        )
+                    }
+                }
+                .addOnFailureListener {
+                    Log.d(TAG, "Inside onFailureListener()")
+                    Log.d(TAG, "Exception = ${it.message}")
+                    Log.d(TAG, "Exception = ${it.localizedMessage}")
+                }
+        } catch (e: Exception) {
+            Log.d(TAG, "Inside catch()")
+            Log.d(TAG, "Exception = ${e.message}")
+            Log.d(TAG, "Exception = ${e.localizedMessage}")
         }
     }
 
@@ -121,44 +147,50 @@ class SignupViewModel(): ViewModel() {
 
         signUpInProgress.value = true
 
-        FirebaseAuth
-            .getInstance()
-            .createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                Log.d(TAG, "Inside onComleteListener()")
-                Log.d(TAG, "isSuccessful = ${it.isSuccessful}")
+        try {
+            FirebaseAuth
+                .getInstance()
+                .createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener {
+                    Log.d(TAG, "Inside onComleteListener()")
+                    Log.d(TAG, "isSuccessful = ${it.isSuccessful}")
 
-                signUpInProgress.value = false
+                    signUpInProgress.value = false
 
-                FirebaseFirestore
-                    .getInstance()
-                    .collection("users")
-                    .document(it.result!!.user!!.uid)
-                    .set(
-                        hashMapOf(
-                            "firstName" to firstName,
-                            "lastName" to lastName,
-                            "email" to email,
-                            "role" to "user",
-                            "exp" to 0,
+                    FirebaseFirestore
+                        .getInstance()
+                        .collection("users")
+                        .document(it.result!!.user!!.uid)
+                        .set(
+                            hashMapOf(
+                                "firstName" to firstName,
+                                "lastName" to lastName,
+                                "email" to email,
+                                "role" to "user",
+                                "exp" to 0,
+                            )
                         )
-                    )
-                    .addOnSuccessListener {
-                        Log.d(TAG, "Inside onSuccessListener()")
-                        Log.d(TAG, "isSuccessful = true")
+                        .addOnSuccessListener {
+                            Log.d(TAG, "Inside onSuccessListener()")
+                            Log.d(TAG, "isSuccessful = true")
 
-                        NavigationRouter.navigateTo(Screen.LoginScreen)
-                    }
-                    .addOnFailureListener {
-                        Log.d(TAG, "Inside onFailureListener()")
-                        Log.d(TAG, "Exception = ${it.message}")
-                        Log.d(TAG, "Exception = ${it.localizedMessage}")
-                    }
-            }
-            .addOnFailureListener {
-                Log.d(TAG, "Inside onFailureListener()")
-                Log.d(TAG, "Exception = ${it.message}")
-                Log.d(TAG, "Exception = ${it.localizedMessage}")
-            }
+                            NavigationRouter.navigateTo(Screen.LoginScreen)
+                        }
+                        .addOnFailureListener {
+                            Log.d(TAG, "Inside onFailureListener()")
+                            Log.d(TAG, "Exception = ${it.message}")
+                            Log.d(TAG, "Exception = ${it.localizedMessage}")
+                        }
+                }
+                .addOnFailureListener {
+                    Log.d(TAG, "Inside onFailureListener()")
+                    Log.d(TAG, "Exception = ${it.message}")
+                    Log.d(TAG, "Exception = ${it.localizedMessage}")
+                }
+        } catch (e: Exception) {
+            Log.d(TAG, "Inside catch()")
+            Log.d(TAG, "Exception = ${e.message}")
+            Log.d(TAG, "Exception = ${e.localizedMessage}")
+        }
     }
 }

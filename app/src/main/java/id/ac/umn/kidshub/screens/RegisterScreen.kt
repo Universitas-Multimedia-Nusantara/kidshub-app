@@ -121,7 +121,12 @@ fun RegisterScreen(signupViewModel: SignupViewModel = viewModel()) {
             }
         }
         if (signupViewModel.signUpInProgress.value) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .padding(16.dp),
+                color = Color(0xFFAFAFAF),
+                trackColor = Color(0xFF47A7FF),
+            )
         }
     }
 }

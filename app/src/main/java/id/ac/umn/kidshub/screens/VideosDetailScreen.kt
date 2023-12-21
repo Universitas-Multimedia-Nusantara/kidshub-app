@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -145,111 +146,113 @@ fun VideosDetailScreenContent(
             modifier = Modifier
                 .fillMaxSize(),
         ) {
-            Column(
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color(0xFFFFFFFF))
             ) {
-                AndroidView(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    factory = { context ->
-                        YouTubePlayerView(context).apply {
-                            lifeCyclerOwner.lifecycle.addObserver(this)
-                            addYouTubePlayerListener(
-                                object : AbstractYouTubePlayerListener() {
-                                    override fun onReady(youTubePlayer: YouTubePlayer) {
-                                        youTubePlayer.loadVideo(videosCode[videosId!!], 0f)
+                item {
+                    AndroidView(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        factory = { context ->
+                            YouTubePlayerView(context).apply {
+                                lifeCyclerOwner.lifecycle.addObserver(this)
+                                addYouTubePlayerListener(
+                                    object : AbstractYouTubePlayerListener() {
+                                        override fun onReady(youTubePlayer: YouTubePlayer) {
+                                            youTubePlayer.loadVideo(videosCode[videosId!!], 0f)
+                                        }
                                     }
-                                }
+                                )
+                            }
+                        }
+                    )
+                    Row (
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(20.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Button(
+                            colors = ButtonDefaults.elevatedButtonColors(
+                                containerColor = Color(0xFF47A7FF),
+                                contentColor = Color.White
+                            ),
+                            onClick = {
+                                downloadVideo()
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_download_icon),
+                                contentDescription = null,
                             )
                         }
-                    }
-                )
-                Row (
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Button(
-                        colors = ButtonDefaults.elevatedButtonColors(
-                            containerColor = Color(0xFF47A7FF),
-                            contentColor = Color.White
-                        ),
-                        onClick = {
-                            downloadVideo()
+                        Spacer(modifier = Modifier.width(5.dp))
+                        Button(
+                            colors = ButtonDefaults.elevatedButtonColors(
+                                containerColor = Color(0xFF47A7FF),
+                                contentColor = Color.White
+                            ),
+                            onClick = {
+                                NavigationRouter.navigateTo(Screen.HomeScreen)
+                            }
+                        ) {
+                            Text(
+                                text = "More",
+                                fontFamily = poppinsFamily,
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 14.sp,
+                                textAlign = TextAlign.Center )
                         }
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_download_icon),
-                            contentDescription = null,
-                        )
                     }
-                    Spacer(modifier = Modifier.width(5.dp))
-                    Button(
-                        colors = ButtonDefaults.elevatedButtonColors(
-                            containerColor = Color(0xFF47A7FF),
-                            contentColor = Color.White
-                        ),
-                        onClick = {
-                            NavigationRouter.navigateTo(Screen.HomeScreen)
-                        }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(20.dp, 0.dp),
                     ) {
                         Text(
-                            text = "More",
+                            modifier = Modifier.alpha(0.55f),
+                            text = "Title",
+                            fontFamily = poppinsFamily,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 14.sp,
+                            textAlign = TextAlign.Start,
+                            color = Color.Black,
+                        )
+                        Text(
+                            text = videosTitle[videosId!!],
+                            color = Color.Black,
+                            fontSize = 24.sp,
+                            fontFamily = poppinsFamily,
+                            fontWeight = FontWeight.Bold,
+                        )
+                        Text(
+                            text = "by ${videosUploader[videosId]}",
+                            color = (Color(0xFF878787)),
+                            fontSize = 16.sp,
                             fontFamily = poppinsFamily,
                             fontWeight = FontWeight.Normal,
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Text(
+                            modifier = Modifier.alpha(0.55f),
+                            text = "Description",
+                            fontFamily = poppinsFamily,
+                            fontWeight = FontWeight.Bold,
                             fontSize = 14.sp,
-                            textAlign = TextAlign.Center )
+                            textAlign = TextAlign.Start,
+                            color = Color.Black,
+                        )
+                        Text(
+                            text = videosDescription[videosId],
+                            color = Color.Black,
+                            fontSize = 16.sp,
+                            fontFamily = poppinsFamily,
+                            fontWeight = FontWeight.Normal,
+                        )
                     }
-                }
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp, 0.dp),
-                ) {
-                    Text(
-                        modifier = Modifier.alpha(0.55f),
-                        text = "Title",
-                        fontFamily = poppinsFamily,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp,
-                        textAlign = TextAlign.Start,
-                        color = Color.Black,
-                    )
-                    Text(
-                        text = videosTitle[videosId!!],
-                        color = Color.Black,
-                        fontSize = 24.sp,
-                        fontFamily = poppinsFamily,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    Text(
-                        text = "by ${videosUploader[videosId]}",
-                        color = (Color(0xFF878787)),
-                        fontSize = 16.sp,
-                        fontFamily = poppinsFamily,
-                        fontWeight = FontWeight.Normal,
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Text(
-                        modifier = Modifier.alpha(0.55f),
-                        text = "Description",
-                        fontFamily = poppinsFamily,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp,
-                        textAlign = TextAlign.Start,
-                        color = Color.Black,
-                    )
-                    Text(
-                        text = videosDescription[videosId],
-                        color = Color.Black,
-                        fontSize = 16.sp,
-                        fontFamily = poppinsFamily,
-                        fontWeight = FontWeight.Normal,
-                    )
                 }
             }
         }

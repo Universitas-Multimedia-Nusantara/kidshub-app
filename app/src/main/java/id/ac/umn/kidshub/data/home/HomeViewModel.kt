@@ -136,6 +136,14 @@ class HomeViewModel: ViewModel(), CoroutineScope {
         return deferred.await()
     }
 
+    fun clearVideosDataList() {
+        VideosDataProvider.videosDataList.clear()
+    }
+
+    fun clearBooksDataList() {
+        BooksDataProvider.booksDataList.clear()
+    }
+
     suspend fun getBooksData(): List<BooksData>  {
         val deferred = CompletableDeferred<List<BooksData>>()
 

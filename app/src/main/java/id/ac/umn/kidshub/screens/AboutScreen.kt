@@ -219,7 +219,7 @@ fun AboutScreenContent(
                                 Text(
                                     modifier = Modifier
                                         .fillMaxWidth(),
-                                    text = "NIM: 00000055915",
+                                    text = "NIM: 00000055935",
                                     fontFamily = poppinsFamily,
                                     fontWeight = FontWeight.Normal,
                                     fontSize = 14.sp,
