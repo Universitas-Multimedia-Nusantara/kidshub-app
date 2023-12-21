@@ -1,11 +1,25 @@
 package id.ac.umn.kidshub.navigation
 
-sealed class Screen(val route: String) {
-    object MainScreen : Screen("main_screen")
-    object LoginScreen : Screen("login_screen")
-    object RegisterScreen : Screen("register_screen")
+sealed class Screen{
 
-    object HomeScreen : Screen("home_screen")
-    object BooksScreen : Screen("books_screen")
-    object ProfileScreen : Screen("profile_screen")
+    //Authentication Screen
+    object MainScreen : Screen()
+    object LoginScreen : Screen()
+    object RegisterScreen : Screen()
+
+    //Home Screen
+    object HomeScreen : Screen()
+
+    object VideosScreen : Screen()
+    object BooksScreen : Screen()
+    object ProfileScreen : Screen()
+
+    object AccountCenterScreen : Screen()
+
+    object HelpAndRegulationsScreen : Screen()
+
+    object AboutScreen : Screen()
+
+    //Details Screen
+    data class VideosDetailScreen(val videoId: String) : Screen()
 }
